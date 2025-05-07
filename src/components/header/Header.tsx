@@ -44,14 +44,14 @@ const Header: React.FC = () => {
               handleNavigation("~/ ");
             }}
           >
-            <button className="transition-transform transform hover:scale-110 flex h-6 items-center justify-between rounded-xl p-5 font-mono text-xl font-semibold space-x-2">
+            <button className="transition-transform transform hover:scale-110 flex h-6 items-center justify-between rounded-xl p-5 font-mono text-xl font-semibold space-x-2 text-gray-900 dark:text-gray-100">
               <div className="flex items-center space-x-2">
                 <OSLogo osType={osType} />
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="img"
-                  className="hidden md:block h-6 w-6"
+                  className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
                   width="1em"
                   height="1em"
                   viewBox="0 0 1024 1024"
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                   role="img"
-                  className="hidden md:block h-6 w-6"
+                  className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
                   width="1.13em"
                   height="1em"
                   viewBox="0 0 576 512"
@@ -77,7 +77,7 @@ const Header: React.FC = () => {
                 </svg>
               </div>
 
-              <div className="font-mono inline-flex items-center">
+              <div className="font-mono inline-flex items-center text-gray-900 dark:text-gray-100">
                 <span style={{ paddingLeft: "7px", marginLeft: "5px" }}>&nbsp;~/ </span>
                 <span
                   className="ml-2 w-[0.2ch] h-[1.1em] animate-blink"
