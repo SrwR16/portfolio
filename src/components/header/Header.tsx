@@ -78,51 +78,23 @@ const Header: React.FC = () => {
             <button className="transition-transform transform hover:scale-110 flex h-6 items-center justify-between rounded-xl p-5 font-mono text-xl font-semibold space-x-2 text-gray-900 dark:text-gray-100">
               <div className="flex items-center space-x-2">
                 <OSLogo osType={osType} />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  role="img"
+                <img
+                  src="/icons/arrow-icon.svg"
+                  alt="Arrow"
                   className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 1024 1024"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097c-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163L254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475s35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"
-                  ></path>
-                </svg>
+                />
                 {isHomePage ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
+                  <img
+                    src="/icons/home-icon.svg"
+                    alt="Home"
                     className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
-                    width="1.13em"
-                    height="1em"
-                    viewBox="0 0 576 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0M571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93"
-                    ></path>
-                  </svg>
+                  />
                 ) : (
-                  <svg
-                    id="folder-icon"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                    role="img"
+                  <img
+                    src="/icons/folder-icon.svg"
+                    alt="Folder"
                     className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
-                    width="1.13em"
-                    height="1em"
-                    viewBox="0 0 576 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M88.7 223.8L0 375.8V96c0-35.3 28.7-64 64-64h117.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7L416 96c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8m27.6 16.1c5.8-9.9 16.3-15.9 27.7-15.9h400c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"
-                    ></path>
-                  </svg>
+                  />
                 )}
               </div>
 
