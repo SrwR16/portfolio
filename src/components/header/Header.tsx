@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useOS } from "../../hooks/useOS";
 import { useTheme } from "../theme/ThemeContext";
 import MobileMenu from "./MobileMenu";
@@ -11,6 +11,8 @@ const Header: React.FC = () => {
   const { osType } = useOS();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("~/ ");
+  const [displayPath, setDisplayPath] = useState("~/ ");
+  const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout | null>(null);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -19,7 +21,34 @@ const Header: React.FC = () => {
   const handleNavigation = (path: string) => {
     setCurrentPath(path);
     setIsMobileMenuOpen(false);
+
+    // Cancel any ongoing typing animation
+    if (typingTimer) {
+      clearTimeout(typingTimer);
+    }
+
+    // Start typing animation
+    let currentIndex = 0;
+    const typeNextChar = () => {
+      if (currentIndex < path.length) {
+        setDisplayPath(path.substring(0, currentIndex + 1));
+        currentIndex++;
+        const timer = setTimeout(typeNextChar, 100); // Speed of typing
+        setTypingTimer(timer);
+      }
+    };
+
+    typeNextChar();
   };
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (typingTimer) {
+        clearTimeout(typingTimer);
+      }
+    };
+  }, [typingTimer]);
 
   return (
     <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-8">
@@ -78,7 +107,7 @@ const Header: React.FC = () => {
               </div>
 
               <div className="font-mono inline-flex items-center text-gray-900 dark:text-gray-100">
-                <span style={{ paddingLeft: "7px", marginLeft: "5px" }}>&nbsp;~/ </span>
+                <span style={{ paddingLeft: "7px", marginLeft: "5px" }}>&nbsp;{displayPath}</span>
                 <span
                   className="ml-2 w-[0.2ch] h-[1.1em] animate-blink"
                   style={{ backgroundColor: "currentColor" }}
