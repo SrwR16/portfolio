@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Header Preview</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      // Configure Tailwind with dark mode
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {},
+        },
+      };
+    </script>
+    <style>
+      /* Custom styles needed for the header */
+      :root {
+        --bg-background: #fff;
+        --text-primary: #333;
+      }
+
+      .dark {
+        --bg-background: #272c35;
+        --text-primary: #f9fafb;
+      }
+
+      .bg-background {
+        background-color: var(--bg-background);
+      }
+
+      .text-primary {
+        color: var(--text-primary);
+      }
+
+      /* Blink animation for terminal cursor */
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      .animate-blink {
+        animation: blink 1s step-end infinite;
+      }
+
+      /* Horizontal underline style */
+      .horizontal-underline {
+        position: relative;
+      }
+
+      .horizontal-underline::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: currentColor;
+        transition: width 0.3s;
+      }
+
+      .horizontal-underline:hover::after {
+        width: 100%;
+      }
+
+      /* Mobile menu transition */
+      .translate-x-full {
+        transform: translateX(100%);
+      }
+
+      /* Theme switch button */
+      .theme-switch {
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+      }
+
+      .theme-switch:hover {
+        background-color: rgba(156, 163, 175, 0.2);
+      }
+
+      .icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Theme toggle animation */
+      .toggle-rotate {
+        animation: rotate-icon 0.5s ease-in-out;
+      }
+
+      @keyframes rotate-icon {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* OS selection buttons */
+      .os-select-container {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .os-select-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .os-button {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .os-button:hover {
+        transform: translateY(-2px);
+      }
+
+      .linux-button {
+        background-color: #f3cd00;
+        color: #000;
+      }
+
+      .windows-button {
+        background-color: #00a4ef;
+        color: #fff;
+      }
+
+      .apple-button {
+        background-color: #a2aaad;
+        color: #000;
+      }
+
+      .android-button {
+        background-color: #3ddc84;
+        color: #000;
+      }
+
+      /* Page navigation buttons */
+      .page-nav-container {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .page-nav-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .page-button {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.2s;
+        background-color: #4b5563;
+        color: white;
+      }
+
+      /* Dark mode page button */
+      .dark .page-button {
+        background-color: #6b7280;
+        color: white;
+      }
+
+      /* Dark mode transitions */
+      .dark-transition {
+        transition: color 0.3s ease, border-color 0.3s ease;
+        /* Removed background-color transition which causes the splash effect */
+      }
+
+      .dark .text-primary,
+      .dark .font-mono,
+      .dark .text-gray-900 {
+        color: var(--text-primary);
+      }
+
+      /* Terminal cursor in dark mode */
+      .dark .animate-blink {
+        background-color: currentColor;
+      }
+
+      /* Content fade-in animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .content-fadeup {
+        animation: fadeInUp 0.6s ease-out;
+      }
+
+      /* Scroll blur effect for content passing under header */
+      .scroll-blur-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120px;
+        z-index: 40;
+        pointer-events: none;
+        background: linear-gradient(to bottom, var(--bg-background) 50%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .scroll-active .scroll-blur-container {
+        opacity: 1;
+      }
+
+      /* Page section animations */
+      .section-animate {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      }
+
+      .section-animate.section-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+    <script>
+      // Current OS state
+      let currentOS = ""; // Removed default OS setting - set to empty string
+      let currentPath = "~/"; // For displayed animated text
+      let targetPath = "~/ "; // The complete path we're typing toward
+      let typingTimerRef = null;
+
+      // Simple dark mode toggle function
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle("dark");
+
+        // Check if dark mode is active
+        const isDarkMode = document.documentElement.classList.contains("dark");
+
+        // Show sun icon in dark mode, moon icon in light mode
+        document.getElementById("sun-icon").style.display = isDarkMode ? "block" : "none";
+        document.getElementById("moon-icon").style.display = isDarkMode ? "none" : "block";
+
+        // Apply rotation animation to the visible icon
+        const activeIcon = isDarkMode ? document.getElementById("sun-icon") : document.getElementById("moon-icon");
+        const iconWrapper = document.querySelector(".icon-wrapper");
+
+        // Remove the animation class first (in case it's already there)
+        iconWrapper.classList.remove("toggle-rotate");
+
+        // Force a reflow to restart the animation
+        void iconWrapper.offsetWidth;
+
+        // Add the animation class back
+        iconWrapper.classList.add("toggle-rotate");
+      }
+
+      // Mobile menu toggle function
+      function toggleMobileMenu() {
+        const mobileMenu = document.getElementById("mobile-menu");
+        if (mobileMenu.classList.contains("translate-x-full")) {
+          mobileMenu.classList.remove("translate-x-full");
+        } else {
+          mobileMenu.classList.add("translate-x-full");
+        }
+      }
+
+      // Function to change the OS logo
+      function changeOS(os) {
+        currentOS = os;
+
+        // Hide all OS logos
+        document.getElementById("linux-logo").style.display = "none";
+        document.getElementById("windows-logo").style.display = "none";
+        document.getElementById("apple-logo").style.display = "none";
+        document.getElementById("android-logo").style.display = "none";
+
+        // Show the selected OS logo
+        document.getElementById(`${os}-logo`).style.display = "block";
+
+        // Update OS name in display
+        document.getElementById("current-os").textContent = os.charAt(0).toUpperCase() + os.slice(1);
+      }
+
+      // Function to change the current path in terminal
+      function changePath(path) {
+        // Cancel any ongoing typing animation
+        if (typingTimerRef) {
+          clearTimeout(typingTimerRef);
+        }
+
+        targetPath = path;
+        currentPath = "~"; // Start with tilde so animation begins from ~ instead of /
+
+        // Start typing animation
+        typeNextChar();
+
+        // Update current page indicator
+        let pageName = path
+          .replace(/^~\/?/, "")
+          .replace(/\s*\/\s*$/, "")
+          .trim();
+        document.getElementById("current-page").textContent = pageName || "Home";
+
+        // Toggle home/folder icon (never touch OS logos)
+        const homeIcon = document.getElementById("home-icon");
+        const folderIcon = document.getElementById("folder-icon");
+
+        // Remove the inline display style so the responsive classes work properly
+        if (pageName === "" || pageName.toLowerCase() === "home") {
+          homeIcon.classList.remove("md:hidden");
+          homeIcon.classList.add("md:block");
+          folderIcon.classList.remove("md:block");
+          folderIcon.classList.add("md:hidden");
+        } else {
+          folderIcon.classList.remove("md:hidden");
+          folderIcon.classList.add("md:block");
+          homeIcon.classList.remove("md:block");
+          homeIcon.classList.add("md:hidden");
+        }
+      }
+
+      // Effect for typing animation
+      function typeNextChar() {
+        if (currentPath.length < targetPath.length) {
+          currentPath = targetPath.substring(0, currentPath.length + 1);
+          document.getElementById("terminal-path").textContent = currentPath;
+          typingTimerRef = setTimeout(typeNextChar, 100); // Speed of typing
+        }
+      }
+
+      // Initialize OS detection and path on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Set dark mode as default
+        document.documentElement.classList.add("dark");
+
+        // Initialize correct icon for dark mode
+        document.getElementById("sun-icon").style.display = "block";
+        document.getElementById("moon-icon").style.display = "none";
+
+        // Detect the actual OS
+        const userAgent = window.navigator.userAgent.toLowerCase();
+
+        if (/(android)/i.test(userAgent)) {
+          changeOS("android");
+        } else if (/(iphone|ipad|ipod|macintosh|mac os x)/i.test(userAgent)) {
+          changeOS("apple");
+        } else if (/(windows)/i.test(userAgent)) {
+          changeOS("windows");
+        } else {
+          changeOS("linux");
+        }
+
+        // Set initial path and start typing animation
+        changePath("~/ ");
+
+        // Handle scroll effects and content animations
+        const animatedSections = document.querySelectorAll(".section-animate");
+        animatedSections.forEach((section, index) => {
+          // Add section visible class to trigger initial animations
+          setTimeout(() => {
+            section.classList.add("section-visible");
+          }, 100 + index * 150); // Stagger the animations
+        });
+
+        // Handle scroll effects
+        const body = document.body;
+        let lastScrollTop = 0;
+
+        window.addEventListener("scroll", function () {
+          const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+          // Add scroll-active class when scrolling down
+          if (scrollTop > 60) {
+            body.classList.add("scroll-active");
+          } else {
+            body.classList.remove("scroll-active");
+          }
+
+          // Reveal sections as they come into view
+          animatedSections.forEach((section) => {
+            const sectionTop = section.getBoundingClientRect().top;
+            if (sectionTop < window.innerHeight - 100) {
+              section.classList.add("section-visible");
+            }
+          });
+
+          lastScrollTop = scrollTop;
+        });
+      });
+    </script>
+  </head>
+  <body class="bg-background min-h-screen">
+    <div
+      class="flex flex-col relative mx-auto min-h-screen max-w-3xl bg-background px-2 font-sans antialiased xl:max-w-3xl xl:px-0"
+    >
+      <!-- Scroll blur container -->
+      <div class="scroll-blur-container"></div>
+
+      <!-- Header Component -->
+      <header class="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-8">
+        <!-- Background blur effect with enhanced stickiness -->
+        <div
+          class="fixed inset-x-0 top-0 h-32 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"
+        ></div>
+
+        <!-- Main header content - constrained to match content width -->
+        <div class="w-full max-w-3xl mx-auto px-2 xl:px-0">
+          <div
+            class="h-[58px] p-2 rounded-2xl border supports-backdrop-blur:bg-white/10 supports-backdrop-blur:dark:bg-black/10 backdrop-blur-md relative z-50 pointer-events-auto flex justify-between gap-0.5 px-1 [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] sm:gap-1 md:gap-2 items-center"
+          >
+            <!-- Logo/Home link - updated to prevent animation when already on home page -->
+            <a
+              href="/"
+              class=""
+              onclick="
+              // Get current page from display
+              const currentPageName = document.getElementById('current-page').textContent;
+              // Only animate if we're not already on home page
+              if (currentPageName !== 'Home') {
+                changePath('~/ ');
+              }
+              return false;"
+            >
+              <button
+                class="transition-transform transform hover:scale-110 flex h-6 items-center justify-between rounded-xl p-5 font-mono text-xl font-semibold space-x-2"
+              >
+                <div class="flex items-center space-x-2">
+                  <!-- OS-specific logos (always visible, never hidden by home/folder logic) -->
+                  <svg
+                    id="linux-logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="text-primary"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 448 512"
+                    fill="#00A4EF"
+                  >
+                    <path
+                      d="M220.8 123.3c1 .5 1.8 1.7 3 1.7c1.1 0 2.8-.4 2.9-1.5c.2-1.4-1.9-2.3-3.2-2.9c-1.7-.7-3.9-1-5.5-.1c-.4.2-.8.7-.6 1.1c.3 1.3 2.3 1.1 3.4 1.7m-21.9 1.7c1.2 0 2-1.2 3-1.7c1.1-.6 3.1-.4 3.5-1.6c.2-.4-.2-.9-.6-1.1c-1.6-.9-3.8-.6-5.5.1c-1.3.6-3.4 1.5-3.2 2.9c.1 1 1.8 1.5 2.8 1.4M420 403.8c-3.6-4-5.3-11.6-7.2-19.7c-1.8-8.1-3.9-16.8-10.5-22.4c-1.3-1.1-2.6-2.1-4-2.9c-1.3-.8-2.7-1.5-4.1-2c9.2-27.3 5.6-54.5-3.7-79.1c-11.4-30.1-31.3-56.4-46.5-74.4c-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0C132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7c-18.9 22.5-45.5 58.8-58.1 96.7c-6 17.9-8.8 36.1-6.2 53.3c-6.5 5.8-11.4 14.7-16.6 20.2c-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4c0 3.9.6 7.9 1.2 11.8c1.2 8.1 2.5 15.7.8 20.8c-5.2 14.4-5.9 24.4-2.2 31.7c3.8 7.3 11.4 10.5 20.1 12.3c17.3 3.6 40.8 2.7 59.3 12.5c19.8 10.4 39.9 14.1 55.9 10.4c11.6-2.6 21.1-9.6 25.9-20.2c12.5-.1 26.3-5.4 48.3-6.6c14.9-1.2 33.6 5.3 55.1 4.1c.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23c16.6-1.3 34.1-11 48.3-27.9c13.6-16.4 36-23.2 50.9-32.2c7.4-4.5 13.4-10.1 13.9-18.3c.4-8.2-4.4-17.3-15.5-29.7M223.7 87.3c9.8-22.2 34.2-21.8 44-.4c6.5 14.2 3.6 30.9-4.3 40.4c-1.6-.8-5.9-2.6-12.6-4.9c1.1-1.2 3.1-2.7 3.9-4.6c4.8-11.8-.2-27-9.1-27.3c-7.3-.5-13.9 10.8-11.8 23c-4.1-2-9.4-3.5-13-4.4c-1-6.9-.3-14.6 2.9-21.8M183 75.8c10.1 0 20.8 14.2 19.1 33.5c-3.5 1-7.1 2.5-10.2 4.6c1.2-8.9-3.3-20.1-9.6-19.6c-8.4.7-9.8 21.2-1.8 28.1c1 .8 1.9-.2-5.9 5.5c-15.6-14.6-10.5-52.1 8.4-52.1m-13.6 60.7c6.2-4.6 13.6-10 14.1-10.5c4.7-4.4 13.5-14.2 27.9-14.2c7.1 0 15.6 2.3 25.9 8.9c6.3 4.1 11.3 4.4 22.6 9.3c8.4 3.5 13.7 9.7 10.5 18.2c-2.6 7.1-11 14.4-22.7 18.1c-11.1 3.6-19.8 16-38.2 14.9c-3.9-.2-7-1-9.6-2.1c-8-3.5-12.2-10.4-20-15c-8.6-4.8-13.2-10.4-14.7-15.3q-2.1-7.35 4.2-12.3m3.3 334c-2.7 35.1-43.9 34.4-75.3 18c-29.9-15.8-68.6-6.5-76.5-21.9c-2.4-4.7-2.4-12.7 2.6-26.4v-.2c2.4-7.6.6-16-.6-23.9c-1.2-7.8-1.8-15 .9-20c3.5-6.7 8.5-9.1 14.8-11.3c10.3-3.7 11.8-3.4 19.6-9.9c5.5-5.7 9.5-12.9 14.3-18c5.1-5.5 10-8.1 17.7-6.9c8.1 1.2 15.1 6.8 21.9 16l19.6 35.6c9.5 19.9 43.1 48.4 41 68.9m-1.4-25.9c-4.1-6.6-9.6-13.6-14.4-19.6c7.1 0 14.2-2.2 16.7-8.9c2.3-6.2 0-14.9-7.4-24.9c-13.5-18.2-38.3-32.5-38.3-32.5c-13.5-8.4-21.1-18.7-24.6-29.9s-3-23.3-.3-35.2c5.2-22.9 18.6-45.2 27.2-59.2c2.3-1.7.8 3.2-8.7 20.8c-8.5 16.1-24.4 53.3-2.6 82.4c.6-20.7 5.5-41.8 13.8-61.5c12-27.4 37.3-74.9 39.3-112.7c1.1.8 4.6 3.2 6.2 4.1c4.6 2.7 8.1 6.7 12.6 10.3c12.4 10 28.5 9.2 42.4 1.2c6.2-3.5 11.2-7.5 15.9-9c9.9-3.1 17.8-8.6 22.3-15c7.7 30.4 25.7 74.3 37.2 95.7c6.1 11.4 18.3 35.5 23.6 64.6c3.3-.1 7 .4 10.9 1.4c13.8-35.7-11.7-74.2-23.3-84.9c-4.7-4.6-4.9-6.6-2.6-6.5c12.6 11.2 29.2 33.7 35.2 59c2.8 11.6 3.3 23.7.4 35.7c16.4 6.8 35.9 17.9 30.7 34.8c-2.2-.1-3.2 0-4.2 0c3.2-10.1-3.9-17.6-22.8-26.1c-19.6-8.6-36-8.6-38.3 12.5c-12.1 4.2-18.3 14.7-21.4 27.3c-2.8 11.2-3.6 24.7-4.4 39.9c-.5 7.7-3.6 18-6.8 29c-32.1 22.9-76.7 32.9-114.3 7.2m257.4-11.5c-.9 16.8-41.2 19.9-63.2 46.5c-13.2 15.7-29.4 24.4-43.6 25.5s-26.5-4.8-33.7-19.3c-4.7-11.1-2.4-23.1 1.1-36.3c3.7-14.2 9.2-28.8 9.9-40.6c.8-15.2 1.7-28.5 4.2-38.7c2.6-10.3 6.6-17.2 13.7-21.1c.3-.2.7-.3 1-.5c.8 13.2 7.3 26.6 18.8 29.5c12.6 3.3 30.7-7.5 38.4-16.3c9-.3 15.7-.9 22.6 5.1c9.9 8.5 7.1 30.3 17.1 41.6c10.6 11.6 14 19.5 13.7 24.6M173.3 148.7c2 1.9 4.7 4.5 8 7.1c6.6 5.2 15.8 10.6 27.3 10.6c11.6 0 22.5-5.9 31.8-10.8c4.9-2.6 10.9-7 14.8-10.4s5.9-6.3 3.1-6.6s-2.6 2.6-6 5.1c-4.4 3.2-9.7 7.4-13.9 9.8c-7.4 4.2-19.5 10.2-29.9 10.2s-18.7-4.8-24.9-9.7c-3.1-2.5-5.7-5-7.7-6.9c-1.5-1.4-1.9-4.6-4.3-4.9c-1.4-.1-1.8 3.7 1.7 6.5"
+                    ></path>
+                  </svg>
+
+                  <!-- Windows logo (hidden by default) -->
+                  <svg
+                    id="windows-logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="text-primary"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 448 512"
+                    fill="#00A4EF"
+                    style="display: none"
+                  >
+                    <path
+                      d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"
+                    />
+                  </svg>
+
+                  <!-- Apple logo (hidden by default) -->
+                  <svg
+                    id="apple-logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="text-primary"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 384 512"
+                    fill="#A2AAAD"
+                    style="display: none"
+                  >
+                    <path
+                      d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"
+                    />
+                  </svg>
+
+                  <!-- Android logo (hidden by default) -->
+                  <svg
+                    id="android-logo"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="text-primary"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 576 512"
+                    fill="#3DDC84"
+                    style="display: none"
+                  >
+                    <path
+                      d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"
+                    />
+                  </svg>
+
+                  <!-- Arrow icon - hidden on small screens -->
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="hidden md:block h-6 w-6 iconify iconify--simple-line-icons"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 1024 1024"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M271.653 1023.192c-8.685 0-17.573-3.432-24.238-10.097c-13.33-13.33-13.33-35.144 0-48.474L703.67 508.163L254.08 58.573c-13.33-13.331-13.33-35.145 0-48.475s35.143-13.33 48.473 0L776.38 483.925c13.33 13.33 13.33 35.143 0 48.473l-480.492 480.694c-6.665 6.665-15.551 10.099-24.236 10.099z"
+                    ></path>
+                  </svg>
+                </div>
+                <!-- Home/Folder icon (separate from OS logo) -->
+                <span id="page-icon" class="ml-2 flex items-center">
+                  <svg
+                    id="home-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="hidden md:block h-6 w-6 iconify iconify--fa-solid"
+                    width="1.13em"
+                    height="1em"
+                    viewBox="0 0 576 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0M571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93"
+                    ></path>
+                  </svg>
+                  <svg
+                    id="folder-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    class="hidden md:block h-6 w-6 iconify iconify--fa6-solid"
+                    width="1.13em"
+                    height="1em"
+                    viewBox="0 0 576 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M88.7 223.8L0 375.8V96c0-35.3 28.7-64 64-64h117.5c17 0 33.3 6.7 45.3 18.7l26.5 26.5c12 12 28.3 18.7 45.3 18.7L416 96c35.3 0 64 28.7 64 64v32H144c-22.8 0-43.8 12.1-55.3 31.8m27.6 16.1c5.8-9.9 16.3-15.9 27.7-15.9h400c11.5 0 22 6.1 27.7 16.1s5.7 22.2-.1 32.1l-112 192C453.9 474 443.4 480 432 480H32c-11.5 0-22-6.1-27.7-16.1s-5.7-22.2.1-32.1l112-192z"
+                    ></path>
+                  </svg>
+                </span>
+                <!-- Terminal display with path - updated spacing -->
+                <div class="font-mono inline-flex items-center">
+                  <span id="terminal-path" style="padding-left: 7px; margin-left: 5px"
+                    >&nbsp;&nbsp;&nbsp;&nbsp;~/
+                  </span>
+                  <span class="ml-2 w-[0.2ch] h-[1.1em] animate-blink" style="background-color: currentColor"></span>
+                </div>
+              </button>
+            </a>
+
+            <!-- Navigation and controls -->
+            <div class="flex items-center text-base leading-5 p-5">
+              <!-- Desktop navigation links - hidden on small screens -->
+              <div class="hidden sm:flex">
+                <a
+                  href="/about"
+                  class="horizontal-underline rounded py-1 px-3 font-medium text-gray-900 hover:bg-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
+                  onclick="changePath('~/about/ '); return false;"
+                  >About
+                </a>
+                <a
+                  href="/uses"
+                  class="horizontal-underline rounded py-1 px-3 font-medium text-gray-900 hover:bg-gray-200 dark:text-gray-100 dark:hover:bg-gray-700"
+                  onclick="changePath('~/uses/ '); return false;"
+                  >Uses
+                </a>
+              </div>
+
+              <!-- Dark mode toggle button -->
+              <button class="theme-switch" aria-label="Toggle Dark Mode" type="button" onclick="toggleDarkMode()">
+                <div class="icon-wrapper">
+                  <!-- Sun icon for dark mode -->
+                  <svg
+                    id="sun-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 512 512"
+                    class="iconify iconify--fa6-solid"
+                  >
+                    <path
+                      fill="white"
+                      d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391l-19.9 107.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391L13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256L2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121l19.9-107.9c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1l90.3-62.3c4.5-3.1 10.2-3.7 15.2-1.6M160 256a96 96 0 1 1 192 0a96 96 0 1 1-192 0m224 0a128 128 0 1 0-256 0a128 128 0 1 0 256 0"
+                    ></path>
+                  </svg>
+
+                  <!-- Moon icon for light mode -->
+                  <svg
+                    id="moon-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    role="img"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 384 512"
+                    class="iconify iconify--fa6-solid"
+                    style="display: none"
+                  >
+                    <path
+                      fill="black"
+                      d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+                    ></path>
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Mobile menu - visible only on small screens -->
+              <div class="sm:hidden">
+                <button
+                  type="button"
+                  class="ml-1 mr-1 h-8 w-8 rounded py-1"
+                  aria-label="Toggle Menu"
+                  onclick="toggleMobileMenu()"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="text-gray-900 dark:text-gray-100"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+
+                <!-- Mobile menu dropdown -->
+                <div
+                  id="mobile-menu"
+                  class="fixed top-20 right-0 z-10 min-h-screen w-full transform bg-gray-200 opacity-95 duration-300 ease-in-out dark:bg-gray-800 translate-x-full"
+                >
+                  <button
+                    type="button"
+                    aria-label="toggle modal"
+                    class="fixed h-full w-full cursor-auto focus:outline-none"
+                    onclick="toggleMobileMenu()"
+                  ></button>
+
+                  <nav class="fixed mt-8 h-full">
+                    <div class="px-12 py-4">
+                      <a
+                        href="/about"
+                        class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                        onclick="changePath('~/about/ '); toggleMobileMenu(); return false;"
+                        >About</a
+                      >
+                    </div>
+                    <div class="px-12 py-4">
+                      <a
+                        href="/uses"
+                        class="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+                        onclick="changePath('~/uses/ '); toggleMobileMenu(); return false;"
+                        >Uses</a
+                      >
+                    </div>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sample content for the page -->
+      <main class="flex-1 flex flex-col space-y-10 mt-24 pt-10">
+        <div class="mx-auto w-full max-w-3xl space-y-8 px-5">
+          <div class="flex flex-col justify-between gap-2">
+            <div class="prose max-w-none text-sm dark:prose-dark md:text-lg xl:col-span-2">
+              <div class="section-animate content-fadeup">
+                <div>
+                  <h1 class="text-3xl font-extrabold text-primary leading-9 pb-4">
+                    <span class="text-primary">Header Component Preview</span>
+                  </h1>
+                </div>
+              </div>
+              <div class="section-animate" style="transition-delay: 0.2s">
+                <div>
+                  <p class="text-primary">
+                    This is a preview of the header component with OS detection. Your browser was detected as running on
+                    <strong id="current-os">Linux</strong>.
+                  </p>
+                  <p class="text-primary">
+                    You are currently on the <strong id="current-page">Home</strong> page. The terminal path in the
+                    header will update as you navigate between pages.
+                  </p>
+                  <p class="text-primary">
+                    Try the dark mode toggle and mobile menu buttons to see their functionality.
+                  </p>
+
+                  <!-- Page Navigation -->
+                  <div class="page-nav-container">
+                    <h2 class="text-xl font-bold text-primary">Navigate between pages:</h2>
+                    <div class="page-nav-buttons">
+                      <button class="page-button" onclick="changePath('~/ ')">Home</button>
+                      <button class="page-button" onclick="changePath('~/about/ ')">About</button>
+                      <button class="page-button" onclick="changePath('~/uses/ ')">Uses</button>
+                      <button class="page-button" onclick="changePath('~/blog/ ')">Blog</button>
+                      <button class="page-button" onclick="changePath('~/projects/ ')">Projects</button>
+                    </div>
+                  </div>
+
+                  <!-- OS Selection Controls -->
+                  <div class="os-select-container">
+                    <h2 class="text-xl font-bold text-primary">Test with different OS logos:</h2>
+                    <div class="os-select-buttons">
+                      <button class="os-button linux-button" onclick="changeOS('linux')">
+                        <svg width="20" height="20" viewBox="0 0 448 512" fill="#000">
+                          <path
+                            d="M220.8 123.3c1 .5 1.8 1.7 3 1.7c1.1 0 2.8-.4 2.9-1.5c.2-1.4-1.9-2.3-3.2-2.9c-1.7-.7-3.9-1-5.5-.1c-.4.2-.8.7-.6 1.1c.3 1.3 2.3 1.1 3.4 1.7m-21.9 1.7c1.2 0 2-1.2 3-1.7c1.1-.6 3.1-.4 3.5-1.6c.2-.4-.2-.9-.6-1.1c-1.6-.9-3.8-.6-5.5.1c-1.3.6-3.4 1.5-3.2 2.9c.1 1 1.8 1.5 2.8 1.4M420 403.8c-3.6-4-5.3-11.6-7.2-19.7c-1.8-8.1-3.9-16.8-10.5-22.4c-1.3-1.1-2.6-2.1-4-2.9c-1.3-.8-2.7-1.5-4.1-2c9.2-27.3 5.6-54.5-3.7-79.1c-11.4-30.1-31.3-56.4-46.5-74.4c-17.1-21.5-33.7-41.9-33.4-72C311.1 85.4 315.7.1 234.8 0C132.4-.2 158 103.4 156.9 135.2c-1.7 23.4-6.4 41.8-22.5 64.7c-18.9 22.5-45.5 58.8-58.1 96.7c-6 17.9-8.8 36.1-6.2 53.3c-6.5 5.8-11.4 14.7-16.6 20.2c-4.2 4.3-10.3 5.9-17 8.3s-14 6-18.5 14.5c-2.1 3.9-2.8 8.1-2.8 12.4c0 3.9.6 7.9 1.2 11.8c1.2 8.1 2.5 15.7.8 20.8c-5.2 14.4-5.9 24.4-2.2 31.7c3.8 7.3 11.4 10.5 20.1 12.3c17.3 3.6 40.8 2.7 59.3 12.5c19.8 10.4 39.9 14.1 55.9 10.4c11.6-2.6 21.1-9.6 25.9-20.2c12.5-.1 26.3-5.4 48.3-6.6c14.9-1.2 33.6 5.3 55.1 4.1c.6 2.3 1.4 4.6 2.5 6.7v.1c8.3 16.7 23.8 24.3 40.3 23c16.6-1.3 34.1-11 48.3-27.9c13.6-16.4 36-23.2 50.9-32.2c7.4-4.5 13.4-10.1 13.9-18.3c.4-8.2-4.4-17.3-15.5-29.7M223.7 87.3c9.8-22.2 34.2-21.8 44-.4c6.5 14.2 3.6 30.9-4.3 40.4c-1.6-.8-5.9-2.6-12.6-4.9c1.1-1.2 3.1-2.7 3.9-4.6c4.8-11.8-.2-27-9.1-27.3c-7.3-.5-13.9 10.8-11.8 23c-4.1-2-9.4-3.5-13-4.4c-1-6.9-.3-14.6 2.9-21.8M183 75.8c10.1 0 20.8 14.2 19.1 33.5c-3.5 1-7.1 2.5-10.2 4.6c1.2-8.9-3.3-20.1-9.6-19.6c-8.4.7-9.8 21.2-1.8 28.1c1 .8 1.9-.2-5.9 5.5c-15.6-14.6-10.5-52.1 8.4-52.1"
+                          ></path>
+                        </svg>
+                        Linux
+                      </button>
+                      <button class="os-button windows-button" onclick="changeOS('windows')">
+                        <svg width="20" height="20" viewBox="0 0 448 512" fill="#fff">
+                          <path
+                            d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"
+                          />
+                        </svg>
+                        Windows
+                      </button>
+                      <button class="os-button apple-button" onclick="changeOS('apple')">
+                        <svg width="20" height="20" viewBox="0 0 384 512" fill="#000">
+                          <path
+                            d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"
+                          />
+                        </svg>
+                        Apple
+                      </button>
+                      <button class="os-button android-button" onclick="changeOS('android')">
+                        <svg width="20" height="20" viewBox="0 0 576 512" fill="#000">
+                          <path
+                            d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.27-10h0l-48.54,84.07a301.25,301.25,0,0,0-246.56,0L116.18,64.45a10,10,0,1,0-17.27,10h0l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55"
+                          />
+                        </svg>
+                        Android
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+export type OSType = 'linux' | 'windows' | 'apple' | 'android';

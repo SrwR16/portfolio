@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-background: #fff;
+  --text-primary: #333;
+}
+
+.dark {
+  --bg-background: #272c35;
+  --text-primary: #f9fafb;
+}
+
+.bg-background {
+  background-color: var(--bg-background);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+.horizontal-underline {
+  position: relative;
+}
+
+.horizontal-underline::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s;
+}
+
+.horizontal-underline:hover::after {
+  width: 100%;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.content-fadeup {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes rotateIcon {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.toggle-rotate {
+  animation: rotateIcon 0.5s ease-in-out;
+}

@@ -1,0 +1,109 @@
+/* Custom styles needed for the header */
+:root {
+  --bg-background: #fff;
+  --text-primary: #333;
+}
+
+.dark {
+  --bg-background: #272c35;
+  --text-primary: #f9fafb;
+}
+
+.bg-background {
+  background-color: var(--bg-background);
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+/* Blink animation for terminal cursor */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Horizontal underline style */
+.horizontal-underline {
+  position: relative;
+}
+
+.horizontal-underline::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s;
+}
+
+.horizontal-underline:hover::after {
+  width: 100%;
+}
+
+/* Mobile menu transition */
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+/* Theme switch button */
+.theme-switch {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.theme-switch:hover {
+  background-color: rgba(156, 163, 175, 0.2);
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Theme toggle animation */
+.toggle-rotate {
+  animation: rotate-icon 0.5s ease-in-out;
+}
+
+@keyframes rotate-icon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Dark mode transitions */
+.dark-transition {
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.dark .text-primary,
+.dark .font-mono,
+.dark .text-gray-900 {
+  color: var(--text-primary);
+}
+
+/* Terminal cursor in dark mode */
+.dark .animate-blink {
+  background-color: currentColor;
+}
