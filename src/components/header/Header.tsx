@@ -81,19 +81,22 @@ const Header: React.FC = () => {
                 <img
                   src="/icons/arrow-icon.svg"
                   alt="Arrow"
-                  className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
+                  className="hidden md:block h-6 w-6"
+                  style={{ filter: isDarkMode ? "invert(100%)" : "none" }}
                 />
                 {isHomePage ? (
                   <img
                     src="/icons/home-icon.svg"
                     alt="Home"
-                    className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
+                    className="hidden md:block h-6 w-6"
+                    style={{ filter: isDarkMode ? "invert(100%)" : "none" }}
                   />
                 ) : (
                   <img
                     src="/icons/folder-icon.svg"
                     alt="Folder"
-                    className="hidden md:block h-6 w-6 text-gray-900 dark:text-gray-100"
+                    className="hidden md:block h-6 w-6"
+                    style={{ filter: isDarkMode ? "invert(100%)" : "none" }}
                   />
                 )}
               </div>
