@@ -61,7 +61,7 @@ const Header: React.FC = () => {
   }, [typingTimer]);
 
   return (
-    <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-4">
+    <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-8">
       <div className="fixed inset-x-0 top-0 h-32 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
 
       <div className="w-full max-w-3xl mx-auto px-2 xl:px-0">
@@ -119,15 +119,17 @@ const Header: React.FC = () => {
             </button>
           </a>
 
-          <div className="flex items-center text-base leading-5 p-5">
+          <div className="flex items-center text-base leading-5 p-5 pr-6">
             <Navigation onNavigate={handleNavigation} currentPath={currentPath} />
 
-            <ThemeToggle />
+            <div className="ml-5">
+              <ThemeToggle />
+            </div>
 
             <div className="sm:hidden">
               <button
                 type="button"
-                className="ml-1 mr-1 h-8 w-8 rounded py-1"
+                className="ml-2 mr-0 h-8 w-8 rounded py-1"
                 aria-label="Toggle Menu"
                 onClick={toggleMobileMenu}
               >
