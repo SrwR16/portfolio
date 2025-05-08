@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
-import { useTheme } from '../theme/ThemeContext';
-import { Sun, Moon } from 'lucide-react';
+import React, { useRef } from "react";
+import { useTheme } from "../theme/ThemeContext";
 
 const ThemeToggle: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -8,11 +7,11 @@ const ThemeToggle: React.FC = () => {
 
   const handleToggle = () => {
     if (iconWrapperRef.current) {
-      iconWrapperRef.current.classList.remove('toggle-rotate');
+      iconWrapperRef.current.classList.remove("toggle-rotate");
       void iconWrapperRef.current.offsetWidth;
-      iconWrapperRef.current.classList.add('toggle-rotate');
+      iconWrapperRef.current.classList.add("toggle-rotate");
     }
-    
+
     toggleTheme();
   };
 
@@ -23,14 +22,18 @@ const ThemeToggle: React.FC = () => {
       type="button"
       onClick={handleToggle}
     >
-      <div 
-        ref={iconWrapperRef} 
-        className="icon-wrapper flex items-center justify-center"
-      >
+      <div ref={iconWrapperRef} className="icon-wrapper flex items-center justify-center">
         {isDarkMode ? (
-          <Sun size={20} className="text-white" />
+          <img
+            src="/icons/sun-icon.svg"
+            alt="Light mode"
+            width={20}
+            height={20}
+            className="text-white"
+            style={{ filter: "invert(100%)" }}
+          />
         ) : (
-          <Moon size={20} className="text-gray-900" />
+          <img src="/icons/moon-icon.svg" alt="Dark mode" width={20} height={20} className="text-gray-900" />
         )}
       </div>
     </button>
