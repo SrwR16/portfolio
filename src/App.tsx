@@ -1,15 +1,26 @@
-import HomeContent from "./components/content/HomeContent";
+import { Galaxy } from "react-stars-particles";
+import About from "./components/About";
+import Experience from "./components/Experience";
 import Header from "./components/header/Header";
+import Home from "./components/Home";
+
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import Studies from "./components/Studies";
 import { ThemeProvider } from "./components/theme/ThemeContext";
 
 function App() {
   return (
     <ThemeProvider>
       <div className="min-h-screen bg-background transition-colors duration-300">
+        <Galaxy color="#2f2f2f" quantity={300} />
         <Header />
-        <main className="flex-1 flex flex-col space-y-10 pt-24 mt-0">
-          <HomeContent />
-        </main>
+        <Home id="home" />
+        <About />
+        <Experience />
+        <Studies />
+        <Contact />
+        <Footer />
       </div>
     </ThemeProvider>
   );
