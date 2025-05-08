@@ -61,7 +61,7 @@ const Header: React.FC = () => {
   }, [typingTimer]);
 
   return (
-    <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-8">
+    <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-4">
       <div className="fixed inset-x-0 top-0 h-32 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
 
       <div className="w-full max-w-3xl mx-auto px-2 xl:px-0">
