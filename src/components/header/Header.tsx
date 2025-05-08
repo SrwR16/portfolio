@@ -122,7 +122,9 @@ const Header: React.FC = () => {
           <div className="flex items-center text-base leading-5 p-5 pr-6">
             <Navigation onNavigate={handleNavigation} currentPath={currentPath} />
 
-            <ThemeToggle />
+            <div className="ml-5">
+              <ThemeToggle />
+            </div>
 
             <div className="sm:hidden">
               <button
