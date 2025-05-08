@@ -59,6 +59,8 @@
 
 /* Theme switch button */
 .theme-switch {
+  position: relative;
+  overflow: hidden;
   border-radius: 50%;
   width: 36px;
   height: 36px;
@@ -72,24 +74,31 @@
   background-color: rgba(156, 163, 175, 0.2);
 }
 
+.dark .theme-switch:hover {
+  background-color: rgba(55, 65, 81, 0.7);
+}
+
 .icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* Theme toggle animation */
-.toggle-rotate {
-  animation: rotate-icon 0.5s ease-in-out;
-}
-
-@keyframes rotate-icon {
+@keyframes rotate {
   0% {
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
   }
+}
+
+.rotate-animation {
+  animation: rotate 0.5s ease-in-out;
+  transform-origin: center center;
 }
 
 /* Dark mode transitions */
@@ -106,4 +115,90 @@
 /* Terminal cursor in dark mode */
 .dark .animate-blink {
   background-color: currentColor;
+}
+
+/* Enhanced theme icon animations */
+@keyframes icon-pop {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-icon-pop {
+  animation: icon-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Simple pop-in animation */
+@keyframes popIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.pop-in {
+  animation: popIn 0.25s ease-out forwards;
+  transform-origin: center center;
+}
+
+/* Remove old animation classes */
+.icon-pop,
+.animate-icon-pop,
+.toggle-rotate,
+.icon-rotate,
+.sun-animation,
+.moon-animation {
+  display: none;
+}
+
+/* Rotation and pop-out animation for the first icon */
+@keyframes rotatePop {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.rotate-pop-out {
+  animation: rotatePop 0.3s ease-in-out forwards;
+  transform-origin: center center;
+}
+
+/* Make sure animations are played */
+@media (prefers-reduced-motion: no-preference) {
+  .pop-in {
+    display: inline-block;
+  }
+
+  .rotate-animation {
+    display: inline-block;
+  }
+
+  .rotate-pop-out {
+    display: inline-block;
+  }
 }
