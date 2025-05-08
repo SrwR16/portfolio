@@ -20,6 +20,14 @@ const Header: React.FC = () => {
   };
 
   const handleNavigation = (path: string) => {
+    // Check if we're already on the same page (either homepage or any section)
+    const isAlreadyOnSamePage = currentPath === path;
+
+    // Don't do anything if we're clicking the same section we're already on
+    if (isAlreadyOnSamePage) {
+      return;
+    }
+
     setCurrentPath(path);
     setIsMobileMenuOpen(false);
     setIsHomePage(path === "~/ ");
