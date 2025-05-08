@@ -14,6 +14,7 @@ const Header: React.FC = () => {
   const [displayPath, setDisplayPath] = useState("~/ ");
   const [typingTimer, setTypingTimer] = useState<NodeJS.Timeout | null>(null);
   const [isHomePage, setIsHomePage] = useState(true);
+  const [scrolled, setScrolled] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
@@ -51,6 +52,24 @@ const Header: React.FC = () => {
     typeNextChar();
   };
 
+  // Add scroll listener that works with isolated styles
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      setScrolled(isScrolled);
+    };
+
+    // Initial check
+    handleScroll();
+
+    // Add event listener with passive option for better performance
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Remove scrolled dependency to prevent unnecessary re-attaching
+
   // Cleanup timer on unmount
   useEffect(() => {
     return () => {
@@ -60,9 +79,13 @@ const Header: React.FC = () => {
     };
   }, [typingTimer]);
 
+  const headerMarginClass = scrolled ? "mt-4" : "mt-8";
+
   return (
-    <header className="pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top mt-8">
-      <div className="fixed inset-x-0 top-0 h-32 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
+    <header
+      className={`terminal-header pointer-events-none fixed left-0 right-0 z-50 flex h-14 origin-top ${headerMarginClass} transition-all duration-300`}
+    >
+      <div className="terminal-header fixed inset-x-0 top-0 h-24 w-full bg-background to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_bottom,black,transparent)]"></div>
 
       <div className="w-full max-w-3xl mx-auto px-2 xl:px-0">
         <div

@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from './NavLink';
+import React from "react";
+import { NavLink } from "./NavLink";
 
 interface NavigationProps {
   onNavigate: (path: string) => void;
@@ -8,12 +8,12 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
   const links = [
-    { href: '/about', label: 'About', path: '~/about ' },
-    { href: '/uses', label: 'Uses', path: '~/uses ' },
+    { href: "/about", label: "About", path: "~/about " },
+    { href: "/uses", label: "Uses", path: "~/uses " },
   ];
 
   return (
-    <div className="hidden sm:flex">
+    <div className="terminal-header hidden sm:flex">
       {links.map((link) => (
         <NavLink
           key={link.href}
