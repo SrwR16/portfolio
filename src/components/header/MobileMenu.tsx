@@ -9,16 +9,30 @@ interface MobileMenuProps {
 
 const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) => {
   const links = [
-    { href: "/about", label: "About", path: "~/about " },
-    { href: "/uses", label: "Uses", path: "~/uses " },
-    { href: "/blog", label: "Blog", path: "~/blog " },
-    { href: "/projects", label: "Projects", path: "~/projects " },
+    { href: "#home", label: "Home", path: "~/ " },
+    { href: "#about", label: "About", path: "~/about " },
+    { href: "#skills", label: "Skills", path: "~/skills " },
+    { href: "#experience", label: "Experience", path: "~/experience " },
+    { href: "#studies", label: "Studies", path: "~/studies " },
+    { href: "#projects", label: "Projects", path: "~/projects " },
+    { href: "#freelancer", label: "Freelancer", path: "~/freelancer " },
+    { href: "#contact", label: "Contact", path: "~/contact " },
   ];
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string, href: string) => {
     e.preventDefault();
-    onNavigate(path);
+
+    // Close the mobile menu
     onClose();
+
+    // Navigate to the section with smooth scrolling
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      onNavigate(path);
+    }, 300); // Add a small delay to allow the menu to close first
   };
 
   return (
@@ -43,7 +57,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) 
               href={link.href}
               className="terminal-header terminal-header-link text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100 transition-colors hover:text-primary-500 dark:hover:text-primary-400"
               style={{ fontFamily: "inherit" }}
-              onClick={(e) => handleClick(e, link.path)}
+              onClick={(e) => handleClick(e, link.path, link.href)}
             >
               {link.label}
             </a>

@@ -1,36 +1,180 @@
+import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Fade } from "react-awesome-reveal";
-import Typewriter from "typewriter-effect";
 
 interface HomeProps {
-  id: string; // Explicitly define the id prop
+  id: string;
 }
 
 const Home: React.FC<HomeProps> = ({ id }) => {
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isTyping, setIsTyping] = useState(true);
+  const [text, setText] = useState("");
+  const fullText = "I build digital experiences that leave an impression.";
+  const textIndex = useRef(0);
+  const typingSpeed = 100;
+  const cursorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  useEffect(() => {
+    if (isTyping && textIndex.current < fullText.length) {
+      const timeout = setTimeout(() => {
+        setText((prev) => prev + fullText[textIndex.current]);
+        textIndex.current += 1;
+      }, typingSpeed);
+
+      return () => clearTimeout(timeout);
+    } else if (textIndex.current >= fullText.length) {
+      setIsTyping(false);
+    }
+  }, [isTyping, text]);
+
+  // Custom spotlight effect that follows cursor
+  useEffect(() => {
+    if (cursorRef.current) {
+      cursorRef.current.style.background = `radial-gradient(600px circle at ${cursorPosition.x}px ${cursorPosition.y}px, rgba(255, 95, 0, 0.15), transparent 40%)`;
+    }
+  }, [cursorPosition]);
+
   return (
-    <div id={id} className="home-wrapper">
-      {" "}
-      {/* Apply the id prop here */}
-      <div className="home">
-        <Fade direction="down">
-          <div className="texts">
-            <span className="main-title">
-              <Typewriter
-                onInit={(typewriter) => {
-                  typewriter
-                    .typeString("hey,")
-                    .pauseFor(500)
-                    .typeString(" i'm <strong style='color: #ff5f00'>sarwar</strong>!")
-                    .start();
+    <div id={id} className="relative w-full min-h-screen overflow-hidden pt-16 md:pt-0">
+      {/* Cursor spotlight effect */}
+      <div ref={cursorRef} className="absolute inset-0 pointer-events-none z-0" />
+
+      {/* Floating geometric shapes */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {[...Array(10)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${20 + Math.random() * 50}px`,
+              height: `${20 + Math.random() * 50}px`,
+              backgroundColor: i % 2 === 0 ? "rgba(255, 95, 0, 0.1)" : "rgba(255, 255, 255, 0.05)",
+              borderRadius: i % 3 === 0 ? "50%" : "0",
+              transform: `rotate(${Math.random() * 360}deg)`,
+            }}
+            animate={{
+              x: [0, Math.random() * 100 - 50, 0],
+              y: [0, Math.random() * 100 - 50, 0],
+              rotate: [0, 360],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: 10 + Math.random() * 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center justify-center w-full min-h-screen px-4 md:px-6">
+        <div className="max-w-4xl w-full mt-8 md:mt-0">
+          <Fade cascade damping={0.1} fraction={0.5} triggerOnce>
+            <div className="relative mb-8 md:mb-12">
+              <h1 className="text-5xl sm:text-7xl md:text-9xl font-black bg-clip-text text-transparent bg-gradient-to-br from-white to-gray-500 dark:from-white dark:to-gray-400 tracking-tight leading-none">
+                SARWAR
+              </h1>
+              <div className="absolute -bottom-2 md:-bottom-5 left-1 w-1/4 h-1 bg-gradient-to-r from-[#ff5f00] to-transparent"></div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-8 md:mb-12 flex-wrap">
+              <span className="px-3 py-1.5 text-xs uppercase tracking-wider font-semibold border border-[#ff5f00] text-[#ff5f00] rounded-full">
+                Software Engineer
+              </span>
+              <span className="px-3 py-1.5 text-xs uppercase tracking-wider font-semibold bg-[#ff5f00]/10 text-[#ff5f00] rounded-full">
+                Computer Science Student
+              </span>
+              <span className="px-3 py-1.5 text-xs uppercase tracking-wider font-semibold bg-white/5 text-gray-200 dark:text-gray-300 rounded-full backdrop-blur-sm">
+                Tech Enthusiast
+              </span>
+            </div>
+
+            <div className="mb-8 md:mb-12 font-mono text-base md:text-xl text-gray-300 h-8">
+              {text}
+              <span className={`inline-block w-2 h-5 ml-1 bg-[#ff5f00] ${isTyping ? "animate-blink" : ""}`}></span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300"
+              >
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">Passion for Code</h3>
+                <p className="text-sm md:text-base text-gray-300">
+                  Transforming my childhood hobby into a professional journey, I bring creativity and technical
+                  expertise to every project.
+                </p>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300"
+              >
+                <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">Continuous Learning</h3>
+                <p className="text-sm md:text-base text-gray-300">
+                  Always exploring new technologies and methodologies to push the boundaries of what's possible.
+                </p>
+              </motion.div>
+            </div>
+
+            <div className="flex flex-wrap gap-3 md:gap-4">
+              <motion.a
+                href="#about"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-[#ff5f00] text-white font-medium text-base md:text-lg transition-all"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
                 }}
-              />
-            </span>
-            <span className="subtitle">I like to build things.</span>
-            <span className="main-description">
-              Software Engineer and Computer Science student. Passionate about technology since my childhood, made my
-              hobby my job. I'm always trying to learn something new.
-            </span>
-          </div>
-        </Fade>
+              >
+                Get to know me
+              </motion.a>
+
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium text-base md:text-lg transition-all hover:bg-white/15"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                View my work
+              </motion.a>
+            </div>
+          </Fade>
+        </div>
+
+        <motion.div
+          className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <motion.div
+            className="w-6 h-10 rounded-full border-2 border-gray-400 flex justify-center"
+            whileHover={{ scale: 1.1 }}
+          >
+            <motion.div
+              className="w-1 h-2 bg-gray-400 rounded-full mt-2"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );
