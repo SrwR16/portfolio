@@ -6,17 +6,6 @@ const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.3 });
 
-  const techs = [
-    { name: "JavaScript", category: "language" },
-    { name: "React.js", category: "frontend" },
-    { name: "Python", category: "language" },
-    { name: "TypeScript", category: "language" },
-    { name: "C#", category: "language" },
-    { name: ".NET", category: "backend" },
-    { name: "PostgreSQL", category: "database" },
-    { name: "MongoDB", category: "database" },
-  ];
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -83,29 +72,6 @@ const About = () => {
                 <span className="text-[#ff5f00] font-semibold">UFRJ</span> scientific projects, learning a lot about
                 diverse areas of technology and development.
               </motion.p>
-
-              <motion.div variants={itemVariants}>
-                <h3 className="text-xl font-semibold text-gray-200 mb-4">Technical Skills</h3>
-                <div className="flex flex-wrap gap-2">
-                  {techs.map((tech, index) => (
-                    <motion.span
-                      key={index}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
-                        tech.category === "language"
-                          ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                          : tech.category === "frontend"
-                          ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                          : tech.category === "backend"
-                          ? "bg-green-500/20 text-green-300 border border-green-500/30"
-                          : "bg-yellow-500/20 text-yellow-300 border border-yellow-500/30"
-                      }`}
-                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                    >
-                      {tech.name}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
 
               <motion.p variants={itemVariants} className="text-gray-300 text-lg">
                 Furthermore, I speak Portuguese fluently as my native language, and I am also fluent in English. I'm

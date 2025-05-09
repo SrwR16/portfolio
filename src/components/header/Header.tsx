@@ -10,6 +10,7 @@ import ThemeToggle from "./ThemeToggle";
 const SECTIONS = [
   { id: "home", path: "~/ " },
   { id: "about", path: "~/about " },
+  { id: "skills", path: "~/skills " },
   { id: "experience", path: "~/experience " },
   { id: "studies", path: "~/studies " },
   { id: "projects", path: "~/projects " },

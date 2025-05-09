@@ -8,8 +8,11 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
   const links = [
-    { href: "/about", label: "About", path: "~/about " },
-    { href: "/uses", label: "Uses", path: "~/uses " },
+    { href: "#home", label: "Home", path: "~/ " },
+    { href: "#about", label: "About", path: "~/about " },
+    { href: "#skills", label: "Skills", path: "~/skills " },
+    { href: "#experience", label: "Experience", path: "~/experience " },
+    { href: "#projects", label: "Projects", path: "~/projects " },
   ];
 
   return (
@@ -22,6 +25,7 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
           isActive={currentPath === link.path}
           onClick={(e) => {
             e.preventDefault();
+            document.getElementById(link.href.substring(1))?.scrollIntoView({ behavior: "smooth" });
             onNavigate(link.path);
           }}
         />

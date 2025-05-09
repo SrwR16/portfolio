@@ -11,6 +11,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) 
   const links = [
     { href: "#home", label: "Home", path: "~/ " },
     { href: "#about", label: "About", path: "~/about " },
+    { href: "#skills", label: "Skills", path: "~/skills " },
     { href: "#experience", label: "Experience", path: "~/experience " },
     { href: "#studies", label: "Studies", path: "~/studies " },
     { href: "#projects", label: "Projects", path: "~/projects " },

@@ -8,13 +8,14 @@ import Freelancer from "./components/Freelancer";
 import Header from "./components/header/Header";
 import Home from "./components/Home";
 import Projects from "./components/Projects";
+import Skills from "./components/Skills";
 import Studies from "./components/Studies";
 import { ThemeProvider } from "./components/theme/ThemeContext";
 
 function App() {
   // Preload all sections for smoother transitions
   useEffect(() => {
-    const sections = ["about", "experience", "studies", "projects", "contact"];
+    const sections = ["about", "skills", "experience", "studies", "projects", "contact"];
     sections.forEach((section) => {
       const link = document.createElement("link");
       link.rel = "prefetch";
@@ -52,6 +53,7 @@ function App() {
           <main className="relative z-10">
             <Home id="home" />
             <About />
+            <Skills />
             <Experience />
             <Studies />
             <Projects />
