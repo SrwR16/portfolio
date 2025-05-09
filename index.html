@@ -4,14 +4,40 @@
     <meta charset="utf-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#090015" />
     <meta name="description" content="Sarwar's Portfolio Website" />
     <link rel="apple-touch-icon" href="/app.png" />
     <link rel="manifest" href="/manifest.json" />
     <title>Sarwar</title>
+    <style>
+      html,
+      body {
+        background-color: #090015;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+      }
+      #root {
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+      }
+      .root-loaded {
+        opacity: 1 !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Mark root as loaded once content is ready
+      window.addEventListener("DOMContentLoaded", () => {
+        setTimeout(() => {
+          document.getElementById("root").classList.add("root-loaded");
+        }, 100);
+      });
+    </script>
   </body>
 </html>

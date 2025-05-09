@@ -29,7 +29,7 @@ function App() {
     <ThemeProvider>
       <AnimatePresence>
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={{ opacity: 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
           className="min-h-screen bg-background text-primary relative overflow-hidden"
