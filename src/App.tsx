@@ -6,6 +6,8 @@ import Home from "./components/Home";
 
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Freelancer from "./components/Freelancer";
+import Projects from "./components/Projects";
 import Studies from "./components/Studies";
 import { ThemeProvider } from "./components/theme/ThemeContext";
 
@@ -19,6 +21,8 @@ function App() {
         <About />
         <Experience />
         <Studies />
+        <Projects />
+        <Freelancer />
         <Contact />
         <Footer />
       </div>

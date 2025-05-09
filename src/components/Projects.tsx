@@ -1,5 +1,3 @@
-import GitHubIcon from "@mui/icons-material/GitHub";
-import LaunchIcon from "@mui/icons-material/Launch";
 import { useEffect, useRef, useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import styled, { keyframes } from "styled-components";
@@ -106,7 +104,7 @@ const Projects = () => {
         <h2 className="title">~ projects</h2>
         <div className="projects-area">
           {projectsInfos.map((item, index) => (
-            <div className="project-container">
+            <div className="project-container" key={index}>
               {(index % 2 === 0 && <LeftProject item={item} />) || <RightProject item={item} />}
             </div>
           ))}
@@ -174,22 +172,50 @@ const LeftProject = (props) => {
         <div className="left-project-links">
           {item.link !== "" && (
             <a href={item.link} target="_blank" rel="noreferrer">
-              <LaunchIcon className="icon" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="icon"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
             </a>
           )}
           {item.github !== "" && (
             <a href={item.github} target="_blank" rel="noreferrer">
-              <GitHubIcon className="icon" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="icon"
+              >
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
             </a>
           )}
         </div>
         <div className="left-project-tools">
           <SlideTrack ref={ref}>
-            {item.tools.map((item) => (
-              <Tool>{item}</Tool>
+            {item.tools.map((tool, idx) => (
+              <Tool key={`left-tool-1-${idx}`}>{tool}</Tool>
             ))}
-            {item.tools.map((item) => (
-              <Tool>{item}</Tool>
+            {item.tools.map((tool, idx) => (
+              <Tool key={`left-tool-2-${idx}`}>{tool}</Tool>
             ))}
           </SlideTrack>
         </div>
@@ -239,7 +265,7 @@ const RightProject = (props) => {
   }, []);
 
   const item = props.item;
-  console.log(item);
+
   return (
     <Fade style={{ width: "100%", height: "100%" }} direction="left" distance={"30px"}>
       <div className="right-project">
@@ -254,22 +280,50 @@ const RightProject = (props) => {
         <div className="right-project-links">
           {item.link !== "" && (
             <a href={item.link} target="_blank" rel="noreferrer">
-              <LaunchIcon className="icon" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="icon"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
             </a>
           )}
           {item.github !== "" && (
             <a href={item.github} target="_blank" rel="noreferrer">
-              <GitHubIcon className="icon" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="icon"
+              >
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+              </svg>
             </a>
           )}
         </div>
         <div className="right-project-tools">
           <SlideTrack ref={ref}>
-            {item.tools.map((item) => (
-              <Tool>{item}</Tool>
+            {item.tools.map((tool, idx) => (
+              <Tool key={`right-tool-1-${idx}`}>{tool}</Tool>
             ))}
-            {item.tools.map((item) => (
-              <Tool>{item}</Tool>
+            {item.tools.map((tool, idx) => (
+              <Tool key={`right-tool-2-${idx}`}>{tool}</Tool>
             ))}
           </SlideTrack>
         </div>
@@ -284,7 +338,7 @@ const MinorProjects = (props) => {
   return (
     <div className="minor-projects-area">
       {props.projects.map((item, index) => (
-        <div className="minor-project">
+        <div className="minor-project" key={index}>
           <div
             className="minor-project-title"
             onClick={() => {
@@ -304,19 +358,49 @@ const MinorProjects = (props) => {
                 <span className="minor-project-description">{item.description}</span>
                 <div className="minor-projects-footer">
                   <div className="minor-projects-tools">
-                    {item.tools.map((item) => (
-                      <div className="tool">{item}</div>
+                    {item.tools.map((tool, toolIndex) => (
+                      <div className="tool" key={toolIndex}>
+                        {tool}
+                      </div>
                     ))}
                   </div>
                   <div className="minor-projects-links">
                     {item.link !== "" && (
                       <a href={item.link} target="_blank" rel="noreferrer">
-                        <LaunchIcon className="icon" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="icon"
+                        >
+                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                          <polyline points="15 3 21 3 21 9" />
+                          <line x1="10" y1="14" x2="21" y2="3" />
+                        </svg>
                       </a>
                     )}
                     {item.github !== "" && (
                       <a href={item.github} target="_blank" rel="noreferrer">
-                        <GitHubIcon className="icon" />
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="icon"
+                        >
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                        </svg>
                       </a>
                     )}
                   </div>
