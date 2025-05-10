@@ -288,7 +288,10 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-[#ff5f00] text-white font-medium text-base md:text-lg transition-all"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+                      document.getElementById("about")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
                     }}
                   >
                     Get to know me
@@ -301,7 +304,10 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium text-base md:text-lg transition-all hover:bg-white/15"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                      document.getElementById("projects")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
                     }}
                   >
                     View my work

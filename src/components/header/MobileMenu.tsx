@@ -29,7 +29,10 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, onNavigate }) 
     setTimeout(() => {
       const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       }
       onNavigate(path);
     }, 300); // Add a small delay to allow the menu to close first

@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 const Studies = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: false, amount: 0.1 });
 
   const studies = [
     {
@@ -46,7 +46,11 @@ const Studies = () => {
   };
 
   return (
-    <section id="studies" ref={ref} className="py-24 md:py-32 px-6 relative overflow-hidden">
+    <section
+      id="studies"
+      ref={ref}
+      className="py-24 md:py-32 px-6 relative overflow-hidden pt-24 md:pt-32 mt-8 md:mt-12"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent opacity-30 pointer-events-none"></div>
       <div className="absolute -left-32 top-1/4 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl pointer-events-none"></div>

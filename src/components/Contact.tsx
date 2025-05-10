@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 const Contact = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: false, amount: 0.1 });
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -25,7 +25,11 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" ref={ref} className="py-24 md:py-32 px-6 relative overflow-hidden">
+    <section
+      id="contact"
+      ref={ref}
+      className="py-24 md:py-32 px-6 relative overflow-hidden pt-24 md:pt-32 mt-8 md:mt-12"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-t from-transparent via-black/20 to-transparent opacity-40 pointer-events-none"></div>
       <div className="absolute -right-32 top-1/4 w-64 h-64 rounded-full bg-[#ff5f00]/5 blur-3xl pointer-events-none"></div>
