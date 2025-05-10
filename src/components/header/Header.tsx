@@ -134,7 +134,7 @@ const Header: React.FC = () => {
     };
   }, [typingTimer]);
 
-  const headerMarginClass = scrolled ? "mt-2 md:mt-4" : "mt-4 md:mt-8";
+  const headerMarginClass = scrolled ? "mt-4 md:mt-4" : "mt-8 md:mt-8";
 
   return (
     <header
