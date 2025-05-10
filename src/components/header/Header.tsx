@@ -157,6 +157,7 @@ const Header: React.FC = () => {
             className="transition-all"
             onClick={(e) => {
               e.preventDefault();
+              setIsMobileMenuOpen(false);
               document.getElementById("home")?.scrollIntoView({ behavior: "smooth" });
               handleNavigation("~/ ");
             }}
@@ -205,22 +206,45 @@ const Header: React.FC = () => {
             <div>
               <button
                 type="button"
-                className="ml-2 mr-0 h-8 w-8 rounded py-1 flex items-center justify-center"
+                className={`ml-2 mr-0 h-8 w-8 rounded flex items-center justify-center transition-all duration-300 ${
+                  isMobileMenuOpen ? "bg-gray-200 dark:bg-gray-700" : ""
+                }`}
                 aria-label="Toggle Menu"
                 onClick={toggleMobileMenu}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-gray-900 dark:text-gray-100"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
+                <div className="relative w-5 h-5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`text-gray-900 dark:text-gray-100 absolute top-0 left-0 transform transition-all duration-300 ${
+                      isMobileMenuOpen ? "opacity-100 rotate-0" : "opacity-0 rotate-90"
+                    }`}
+                  >
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={`text-gray-900 dark:text-gray-100 absolute top-0 left-0 transform transition-all duration-300 ${
+                      isMobileMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"
+                    }`}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                </div>
               </button>
 
               <MobileMenu isOpen={isMobileMenuOpen} onClose={toggleMobileMenu} onNavigate={handleNavigation} />
