@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useOS } from "../../hooks/useOS";
 import { useTheme } from "../theme/ThemeContext";
 import MobileMenu from "./MobileMenu";
-import Navigation from "./Navigation";
 import OSLogo from "./OSLogo";
 import ThemeToggle from "./ThemeToggle";
 
@@ -199,16 +198,14 @@ const Header: React.FC = () => {
           </a>
 
           <div className="flex items-center text-base leading-5 p-4 pr-5">
-            <Navigation onNavigate={handleNavigation} currentPath={currentPath} />
-
-            <div className="ml-4">
+            <div>
               <ThemeToggle />
             </div>
 
-            <div className="sm:hidden">
+            <div>
               <button
                 type="button"
-                className="ml-2 mr-0 h-8 w-8 rounded py-1"
+                className="ml-2 mr-0 h-8 w-8 rounded py-1 flex items-center justify-center"
                 aria-label="Toggle Menu"
                 onClick={toggleMobileMenu}
               >
