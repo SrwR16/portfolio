@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 const Freelancer = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: false, amount: 0.1 });
 
   const projects = [
     {
@@ -49,7 +49,11 @@ const Freelancer = () => {
   };
 
   return (
-    <section id="freelancer" ref={ref} className="py-24 md:py-32 px-6 relative overflow-hidden">
+    <section
+      id="freelancer"
+      ref={ref}
+      className="py-24 md:py-32 px-6 relative overflow-hidden pt-24 md:pt-32 mt-8 md:mt-12"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10 opacity-30 pointer-events-none"></div>
       <div className="absolute -right-32 top-1/3 w-64 h-64 rounded-full bg-green-500/5 blur-3xl pointer-events-none"></div>

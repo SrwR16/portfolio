@@ -169,30 +169,114 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300"
-                  >
-                    <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">Passion for Code</h3>
-                    <p className="text-sm md:text-base text-gray-300">
-                      Transforming my childhood hobby into a professional journey, I bring creativity and technical
-                      expertise to every project.
-                    </p>
+                  <motion.div className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300 flex items-center justify-center">
+                    <div className="flex items-center gap-6">
+                      <motion.a
+                        href="https://github.com/hugofolloni"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                      </motion.a>
+
+                      <motion.a
+                        href="https://linkedin.com/in/hugofolloni"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                          <rect x="2" y="9" width="4" height="12"></rect>
+                          <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                      </motion.a>
+
+                      <motion.a
+                        href="mailto:hugofolloni@gmail.com"
+                        rel="noreferrer"
+                        className="text-gray-400 hover:text-white transition-colors"
+                        whileHover={{ scale: 1.2 }}
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="28"
+                          height="28"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                          <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                      </motion.a>
+                    </div>
                   </motion.div>
 
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300"
+                    className="p-4 md:p-6 rounded-xl bg-gradient-to-br from-black/50 to-black/10 dark:from-white/5 dark:to-transparent backdrop-blur-sm border border-white/10 hover:border-[#ff5f00]/30 transition-all duration-300 flex items-center justify-center"
                   >
-                    <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">Continuous Learning</h3>
-                    <p className="text-sm md:text-base text-gray-300">
-                      Always exploring new technologies and methodologies to push the boundaries of what's possible.
-                    </p>
+                    <motion.a
+                      href="/resume.pdf"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-3 px-6 py-3 rounded-lg bg-[#ff5f00] text-white font-medium text-base transition-all"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                      </svg>
+                      <span>Resume</span>
+                    </motion.a>
                   </motion.div>
                 </motion.div>
 
                 <motion.div
-                  className="flex flex-wrap gap-3 md:gap-4 justify-center"
+                  className="flex flex-wrap gap-3 md:gap-4 justify-center mb-20 sm:mb-32"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -204,7 +288,10 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-[#ff5f00] text-white font-medium text-base md:text-lg transition-all"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+                      document.getElementById("about")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
                     }}
                   >
                     Get to know me
@@ -217,7 +304,10 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium text-base md:text-lg transition-all hover:bg-white/15"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                      document.getElementById("projects")?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
                     }}
                   >
                     View my work
@@ -236,6 +326,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
             opacity: contentVisible ? 1 : 0,
           }}
           transition={{ duration: 2, repeat: Infinity }}
+          style={{ pointerEvents: "none" }}
         >
           <motion.div
             className="w-6 h-10 rounded-full border-2 border-gray-400 flex justify-center"

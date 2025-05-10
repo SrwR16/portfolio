@@ -25,7 +25,10 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
           isActive={currentPath === link.path}
           onClick={(e) => {
             e.preventDefault();
-            document.getElementById(link.href.substring(1))?.scrollIntoView({ behavior: "smooth" });
+            document.getElementById(link.href.substring(1))?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
             onNavigate(link.path);
           }}
         />

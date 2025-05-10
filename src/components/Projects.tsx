@@ -149,7 +149,11 @@ const Projects = () => {
   };
 
   return (
-    <section id="projects" ref={ref} className="relative py-24 md:py-32 px-6 overflow-hidden">
+    <section
+      id="projects"
+      ref={ref}
+      className="py-24 md:py-32 px-6 relative overflow-hidden pt-24 md:pt-32 mt-8 md:mt-12"
+    >
       {/* Background elements */}
       <div className="absolute -top-1/2 right-0 w-1/3 h-full opacity-30 bg-gradient-radial from-[#ff5f00]/10 to-transparent pointer-events-none"></div>
       <div className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 opacity-30 bg-gradient-radial from-[#ff5f00]/10 to-transparent pointer-events-none"></div>
