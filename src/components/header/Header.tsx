@@ -198,14 +198,14 @@ const Header: React.FC = () => {
           </a>
 
           <div className="flex items-center text-base leading-5 p-4 pr-5">
-            <div className="ml-4">
+            <div>
               <ThemeToggle />
             </div>
 
             <div>
               <button
                 type="button"
-                className="ml-2 mr-0 h-8 w-8 rounded py-1"
+                className="ml-2 mr-0 h-8 w-8 rounded py-1 flex items-center justify-center"
                 aria-label="Toggle Menu"
                 onClick={toggleMobileMenu}
               >
