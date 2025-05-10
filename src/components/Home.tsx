@@ -276,7 +276,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                 </motion.div>
 
                 <motion.div
-                  className="flex flex-wrap gap-3 md:gap-4 justify-center mb-20 sm:mb-32"
+                  className="flex flex-wrap gap-3 md:gap-4 justify-center"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
@@ -288,10 +288,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-[#ff5f00] text-white font-medium text-base md:text-lg transition-all"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("about")?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
+                      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
                     }}
                   >
                     Get to know me
@@ -304,10 +301,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
                     className="px-5 sm:px-8 py-2.5 sm:py-3 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 text-white font-medium text-base md:text-lg transition-all hover:bg-white/15"
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById("projects")?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
+                      document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
                     }}
                   >
                     View my work
@@ -326,7 +320,6 @@ const Home: React.FC<HomeProps> = ({ id }) => {
             opacity: contentVisible ? 1 : 0,
           }}
           transition={{ duration: 2, repeat: Infinity }}
-          style={{ pointerEvents: "none" }}
         >
           <motion.div
             className="w-6 h-10 rounded-full border-2 border-gray-400 flex justify-center"
