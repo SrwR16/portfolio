@@ -86,8 +86,8 @@ const About = () => {
           </motion.div>
 
           <motion.div variants={imageVariants} className="relative order-1 md:order-2 flex justify-center">
-            <div className="relative w-80 h-80 overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#ff5f00]/40 to-purple-500/40 opacity-70 mix-blend-overlay"></div>
+            <div className="relative w-80 h-80 overflow-hidden rounded-2xl">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#ff5f00]/40 to-purple-500/40 opacity-70 mix-blend-overlay rounded-2xl"></div>
 
               <motion.div
                 className="absolute inset-0 border-2 rounded-2xl border-white/10"
