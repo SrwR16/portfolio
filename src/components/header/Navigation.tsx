@@ -4,9 +4,10 @@ import { NavLink } from "./NavLink";
 interface NavigationProps {
   onNavigate: (path: string) => void;
   currentPath: string;
+  className?: string;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
+const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath, className }) => {
   const links = [
     { href: "#home", label: "Home", path: "~/ " },
     { href: "#about", label: "About", path: "~/about " },
@@ -16,7 +17,7 @@ const Navigation: React.FC<NavigationProps> = ({ onNavigate, currentPath }) => {
   ];
 
   return (
-    <div className="terminal-header hidden sm:flex">
+    <div className={`terminal-header hidden sm:flex ${className || ""}`}>
       {links.map((link) => (
         <NavLink
           key={link.href}
