@@ -313,7 +313,7 @@ const Home: React.FC<HomeProps> = ({ id }) => {
         </div>
 
         <motion.div
-          className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 hidden md:block"
           initial={{ opacity: 0 }}
           animate={{
             y: [0, 10, 0],
