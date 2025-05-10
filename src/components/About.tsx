@@ -7,6 +7,7 @@ const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.3 });
   const [randomZ, setRandomZ] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const define = Math.ceil(Math.random() * 100);
@@ -15,6 +16,21 @@ const About = () => {
     } else {
       setRandomZ(1);
     }
+
+    // Check if the device is mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Initial check
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   // Animation variants
@@ -47,7 +63,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" ref={ref} className="py-24 md:py-32 px-6 relative overflow-hidden">
+    <section id="about" ref={ref} className="py-16 md:py-24 px-4 md:px-6 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-transparent opacity-40 pointer-events-none"></div>
       <div className="absolute -left-32 top-1/4 w-64 h-64 rounded-full bg-[#ff5f00]/5 blur-3xl pointer-events-none"></div>
@@ -58,24 +74,24 @@ const About = () => {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
         >
           <motion.div variants={containerVariants} className="order-2 md:order-1">
-            <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-8 relative inline-block">
+            <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl font-bold mb-6 relative inline-block">
               <span className="text-gray-200">about</span>
               <span className="text-[#ff5f00]">_me</span>
               <span className="absolute -bottom-2 left-0 h-[3px] w-full bg-gradient-to-r from-[#ff5f00] to-transparent"></span>
             </motion.h2>
 
-            <motion.div variants={containerVariants} className="space-y-6">
-              <motion.p variants={itemVariants} className="text-gray-300 text-lg">
+            <motion.div variants={containerVariants} className="space-y-4 md:space-y-6">
+              <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg">
                 I'm a Brazilian <span className="text-[#ff5f00] font-semibold">software engineer</span> based in Rio de
                 Janeiro. Self-taught and curious, I always want to learn new things. I love to{" "}
                 <span className="text-[#ff5f00] font-semibold">solve problems</span> and think rationally about them,
                 and that's why I love to code.
               </motion.p>
 
-              <motion.p variants={itemVariants} className="text-gray-300 text-lg">
+              <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg">
                 I study Computer Science at Universidade Federal do Rio de Janeiro, one of the most prestigious
                 universities in Brazil. Besides, I am a software engineer intern at{" "}
                 <span className="text-[#ff5f00] font-semibold">BigDataCorp</span>. I also work under{" "}
@@ -84,12 +100,12 @@ const About = () => {
                 diverse areas of technology and development.
               </motion.p>
 
-              <motion.p variants={itemVariants} className="text-gray-300 text-lg">
+              <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg">
                 Furthermore, I speak Portuguese fluently as my native language, and I am also fluent in English. I'm
                 currently trying to learn Italian as well.
               </motion.p>
 
-              <motion.p variants={itemVariants} className="text-gray-300 text-lg">
+              <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg">
                 Also, I spend most of my free time playing guitar and playing games such as Valorant, Chess and League
                 of Legends.
               </motion.p>
@@ -97,8 +113,15 @@ const About = () => {
           </motion.div>
 
           <ParallaxProvider>
-            <motion.div variants={imageVariants} className="relative order-1 md:order-2 flex justify-center">
-              <Parallax className="relative w-80 h-80" speed={-17}>
+            <motion.div
+              variants={imageVariants}
+              className="relative order-1 md:order-2 flex justify-center mb-8 md:mb-0"
+            >
+              <Parallax
+                className="relative w-64 h-64 md:w-80 md:h-80"
+                speed={isMobile ? -5 : -17}
+                disabled={isMobile && window.innerHeight < 700}
+              >
                 {/* Image container with morphing border */}
                 <div className="relative w-full h-full overflow-hidden rounded-2xl">
                   <div className="absolute inset-0 bg-gradient-to-tr from-[#ff5f00]/40 to-purple-500/40 opacity-70 mix-blend-overlay rounded-2xl"></div>
@@ -128,23 +151,23 @@ const About = () => {
                   />
                 </div>
 
-                {/* Parallax balls - moved after the image to be in front */}
+                {/* Parallax balls - with adjusted size for mobile */}
                 <div
-                  className="absolute w-[100px] h-[100px] rounded-full bg-[#ff5f00] bottom-0 left-0 -mb-[50px] -ml-[50px] z-20"
+                  className="absolute w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full bg-[#ff5f00] bottom-0 left-0 -mb-[30px] -ml-[30px] md:-mb-[40px] md:-ml-[40px] z-10"
                   style={{ zIndex: randomZ > 0 ? 20 : 10 }}
                 />
                 <div
-                  className="absolute w-[100px] h-[100px] rounded-full bg-[#ff5f00] top-0 right-0 -mt-[50px] -mr-[50px] z-20"
+                  className="absolute w-[60px] h-[60px] md:w-[80px] md:h-[80px] rounded-full bg-[#ff5f00] top-0 right-0 -mt-[30px] -mr-[30px] md:-mt-[40px] md:-mr-[40px] z-10"
                   style={{ zIndex: randomZ > 0 ? 10 : 20 }}
                 />
               </Parallax>
 
-              {/* Decorative elements */}
+              {/* Decorative background elements */}
               <motion.div
-                className="absolute -z-10 w-full h-full left-5 top-5 bg-gradient-to-br from-[#ff5f00]/20 to-transparent rounded-2xl"
+                className="absolute -z-10 w-full h-full left-3 top-3 md:left-5 md:top-5 bg-gradient-to-br from-[#ff5f00]/20 to-transparent rounded-2xl"
                 animate={{
-                  left: [5, 10, 5],
-                  top: [5, 15, 5],
+                  left: [3, 8, 3],
+                  top: [3, 8, 3],
                 }}
                 transition={{
                   duration: 5,
@@ -154,7 +177,7 @@ const About = () => {
               ></motion.div>
 
               <motion.div
-                className="absolute bottom-0 right-0 w-20 h-20 bg-[#ff5f00]/10 rounded-full blur-xl"
+                className="absolute bottom-0 right-0 w-16 h-16 bg-[#ff5f00]/10 rounded-full blur-xl"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 4, repeat: Infinity }}
               ></motion.div>
