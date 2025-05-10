@@ -27,7 +27,7 @@ interface MinorProjectInfo {
 
 const Projects = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
+  const isInView = useInView(ref, { once: false, amount: 0.2, margin: "0px 0px -20% 0px" });
 
   const projectsInfos = [
     {
@@ -204,7 +204,7 @@ const Projects = () => {
 const FeaturedProject = ({ project, index }: { project: ProjectInfo; index: number }) => {
   const isEven = index % 2 === 0;
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const isInView = useInView(ref, { once: false, amount: 0.3, margin: "0px 0px -15% 0px" });
 
   const containerVariants = {
     hidden: { opacity: 0, y: 30 },

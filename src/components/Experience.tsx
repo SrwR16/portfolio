@@ -12,7 +12,7 @@ interface ExperienceItem {
 
 const Experience = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
+  const isInView = useInView(ref, { once: false, amount: 0.2, margin: "0px 0px -20% 0px" });
 
   const experiences: ExperienceItem[] = [
     {

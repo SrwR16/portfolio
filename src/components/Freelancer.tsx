@@ -3,7 +3,7 @@ import { useRef } from "react";
 
 const Freelancer = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: false, amount: 0.1 });
+  const isInView = useInView(ref, { once: false, amount: 0.2, margin: "0px 0px -20% 0px" });
 
   const projects = [
     {
