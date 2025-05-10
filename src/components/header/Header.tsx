@@ -93,8 +93,8 @@ const Header: React.FC = () => {
       sectionElements.forEach(({ id, element, path }) => {
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Consider a section in view if its top is within the viewport or if it's the last section and we're at the bottom
-          if (rect.top <= viewportHeight * 0.5 && rect.bottom >= viewportHeight * 0.1) {
+          // Consider a section in view with more generous thresholds to prevent empty states
+          if (rect.top <= viewportHeight * 0.6 && rect.bottom >= viewportHeight * 0.05) {
             currentSectionId = id;
             currentSectionPath = path;
           }
