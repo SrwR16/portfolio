@@ -12,7 +12,7 @@ const OSLogo: React.FC<OSLogoProps> = ({ osType }) => {
       return <img src="/icons/linux-logo.svg" alt="Linux" className={iconClass} />;
     case "windows":
       return <img src="/icons/windows-logo.svg" alt="Windows" className={iconClass} />;
-    case "macos":
+    case "apple":
       return <img src="/icons/apple-logo.svg" alt="MacOS" className={iconClass} />;
     case "android":
       return <img src="/icons/android-logo.svg" alt="Android" className={iconClass} />;
