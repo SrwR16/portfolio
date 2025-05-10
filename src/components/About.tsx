@@ -1,10 +1,21 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Parallax, ParallaxProvider } from "react-scroll-parallax";
 import profile from "../assets/profile.png";
 
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.3 });
+  const [randomZ, setRandomZ] = useState(0);
+
+  useEffect(() => {
+    const define = Math.ceil(Math.random() * 100);
+    if (define % 2) {
+      setRandomZ(-1);
+    } else {
+      setRandomZ(1);
+    }
+  }, []);
 
   // Animation variants
   const containerVariants = {
@@ -85,55 +96,70 @@ const About = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div variants={imageVariants} className="relative order-1 md:order-2 flex justify-center">
-            <div className="relative w-80 h-80 overflow-hidden rounded-2xl">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#ff5f00]/40 to-purple-500/40 opacity-70 mix-blend-overlay rounded-2xl"></div>
+          <ParallaxProvider>
+            <motion.div variants={imageVariants} className="relative order-1 md:order-2 flex justify-center">
+              <Parallax className="relative w-80 h-80" speed={-17}>
+                {/* Image container with morphing border */}
+                <div className="relative w-full h-full overflow-hidden rounded-2xl">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#ff5f00]/40 to-purple-500/40 opacity-70 mix-blend-overlay rounded-2xl"></div>
 
+                  <motion.div
+                    className="absolute inset-0 border-2 rounded-2xl border-white/10"
+                    animate={{
+                      borderRadius: [
+                        "30% 70% 70% 30% / 30% 30% 70% 70%",
+                        "50% 50% 50% 50%",
+                        "30% 70% 70% 30% / 70% 30% 70% 30%",
+                      ],
+                    }}
+                    transition={{
+                      duration: 10,
+                      repeat: Infinity,
+                      repeatType: "reverse",
+                    }}
+                  ></motion.div>
+
+                  <motion.img
+                    src={profile}
+                    alt="Profile"
+                    className="w-full h-full object-cover rounded-2xl relative"
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </div>
+
+                {/* Parallax balls - moved after the image to be in front */}
+                <div
+                  className="absolute w-[100px] h-[100px] rounded-full bg-[#ff5f00] bottom-0 left-0 -mb-[50px] -ml-[50px] z-20"
+                  style={{ zIndex: randomZ > 0 ? 20 : 10 }}
+                />
+                <div
+                  className="absolute w-[100px] h-[100px] rounded-full bg-[#ff5f00] top-0 right-0 -mt-[50px] -mr-[50px] z-20"
+                  style={{ zIndex: randomZ > 0 ? 10 : 20 }}
+                />
+              </Parallax>
+
+              {/* Decorative elements */}
               <motion.div
-                className="absolute inset-0 border-2 rounded-2xl border-white/10"
+                className="absolute -z-10 w-full h-full left-5 top-5 bg-gradient-to-br from-[#ff5f00]/20 to-transparent rounded-2xl"
                 animate={{
-                  borderRadius: [
-                    "30% 70% 70% 30% / 30% 30% 70% 70%",
-                    "50% 50% 50% 50%",
-                    "30% 70% 70% 30% / 70% 30% 70% 30%",
-                  ],
+                  left: [5, 10, 5],
+                  top: [5, 15, 5],
                 }}
                 transition={{
-                  duration: 10,
+                  duration: 5,
                   repeat: Infinity,
                   repeatType: "reverse",
                 }}
               ></motion.div>
 
-              <motion.img
-                src={profile}
-                alt="Profile"
-                className="w-full h-full object-cover rounded-2xl z-10 relative"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-
-            {/* Decorative elements */}
-            <motion.div
-              className="absolute -z-10 w-full h-full left-5 top-5 bg-gradient-to-br from-[#ff5f00]/20 to-transparent rounded-2xl"
-              animate={{
-                left: [5, 10, 5],
-                top: [5, 15, 5],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                repeatType: "reverse",
-              }}
-            ></motion.div>
-
-            <motion.div
-              className="absolute bottom-0 right-0 w-20 h-20 bg-[#ff5f00]/10 rounded-full blur-xl"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            ></motion.div>
-          </motion.div>
+              <motion.div
+                className="absolute bottom-0 right-0 w-20 h-20 bg-[#ff5f00]/10 rounded-full blur-xl"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              ></motion.div>
+            </motion.div>
+          </ParallaxProvider>
         </motion.div>
       </div>
     </section>
